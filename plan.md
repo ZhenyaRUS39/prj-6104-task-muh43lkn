@@ -1,8 +1,9 @@
-# Plan: prj-6104-task-muh43lkn
+# Plan: Сделай скрипт для мониторинга Docker контейнеров
 
 **Project:** `docker-monitor`  
 **Task ID:** `task-muh43lkn`  
 **Repo:** `prj-6104-task-muh43lkn`  
+**Progress:** 1/4 subtasks done
 
 ## Summary
 
@@ -10,40 +11,36 @@
 
 ## Subtasks
 
-### 1. Подготовить структуру репозитория
+### ⏳ 1. Подготовить структуру репозитория
 
 - **ID:** `sub-1`
 - **Profile:** `20razrab1`
-- **Tester:** `TBD`
-- **Status:** `pending`
+- **Status:** `unknown`
 - **Description:** Создать репозиторий prj-6104-task-muh43lkn: README.md, .gitignore, config/config.example.yaml, директории bin/, lib/, tests/. Описать требования и формат конфига в README.
 - **Test plan:** Репозиторий инициализирован, файлы README.md, .gitignore, config.example.yaml существуют; git status чистый; валидация YAML через yq возвращает 0.
 
-### 2. Реализовать ядро мониторинга
+### ⬜ 2. Реализовать ядро мониторинга
 
 - **ID:** `sub-2`
 - **Profile:** `30razrab2`
-- **Tester:** `TBD`
 - **Status:** `pending`
 - **Description:** Написать bin/docker-monitor.sh (точка входа) и lib/docker_state.sh (сбор статуса через docker inspect/ps, маппинг running/exited/restarting/unhealthy). Поддержка --once, --interval, --config, --dry-run.
 - **Test plan:** Скрипт запускается с --dry-run на тестовом стеке (nginx + redis + stopped контейнер) и корректно классифицирует состояния; --once завершается после одного прохода; exit code 0 если все healthy, !=0 иначе.
 - **Dependencies:** `sub-1`
 
-### 3. Реализовать алерты в Telegram
+### ⬜ 3. Реализовать алерты в Telegram
 
 - **ID:** `sub-3`
 - **Profile:** `20razrab1`
-- **Tester:** `TBD`
 - **Status:** `pending`
 - **Description:** Добавить lib/notify.sh: отправка сообщений через Telegram Bot API с rate-limit и дедупликацией по контейнер+статус+окно времени. ENV-переменные TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID.
 - **Test plan:** При имитации unhealthy контейнера отправляется POST на api.telegram.org (проверка через mock-сервер или tcpdump); повторный алерт в течение окна не шлётся; токен не утекает в логи.
 - **Dependencies:** `sub-2`
 
-### 4. Написать unit-тесты на bats
+### ⬜ 4. Написать unit-тесты на bats
 
 - **ID:** `sub-4`
 - **Profile:** `30razrab2`
-- **Tester:** `TBD`
 - **Status:** `pending`
 - **Description:** Создать tests/docker_state.bats и tests/notify.bats: подмена docker на mock-скрипт, проверка классификации, дедупликации, dry-run, exit code. Запускаемо через tests/run.sh.
 - **Test plan:** bats tests/*.bats зелёный; покрытие основных веток (running, exited, unhealthy, restart-loop); make test завершается с кодом 0.
